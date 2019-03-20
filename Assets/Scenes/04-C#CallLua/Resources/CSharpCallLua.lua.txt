@@ -1,0 +1,15 @@
+a = 100
+str = "qiucheng"
+isDie = false
+
+person = {
+	Name = "qiucheng",
+	age = 100,
+	eat = function (self,a,b)
+		print("eating..."..a+b)
+	end
+}
+
+function person:add(a,b)
+	print(a+b)
+end
