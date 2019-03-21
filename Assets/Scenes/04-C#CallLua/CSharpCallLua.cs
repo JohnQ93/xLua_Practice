@@ -12,9 +12,9 @@ public class CSharpCallLua : MonoBehaviour {
 
         luaenv.DoString("require 'CSharpCallLua'");
 
-        //print(luaenv.Global.Get<int>("a"));
-        //print(luaenv.Global.Get<string>("str"));
-        //print(luaenv.Global.Get<bool>("isDie"));
+        print(luaenv.Global.Get<int>("a"));
+        print(luaenv.Global.Get<string>("str"));
+        print(luaenv.Global.Get<bool>("isDie"));
 
         Person p = luaenv.Global.Get<Person>("person"); //通过class来接受 值拷贝
         print(p.Name + "-" + p.age);
@@ -22,10 +22,26 @@ public class CSharpCallLua : MonoBehaviour {
 
         IPerson p2 = luaenv.Global.Get<IPerson>("person"); //通过interface来接受  引用拷贝
         print(p2.Name + "-" + p2.age);
-        p2.eat(12,34);
+        p2.eat(12, 34);
         p2.add(111, 222);
         p2.Name = "John.q";
         luaenv.DoString("print(person.Name)");
+
+        Dictionary<string, object> dict = luaenv.Global.Get<Dictionary<string, object>>("person");  //Dictionary可以用来接收表中的键值对
+        foreach (var key in dict.Keys)
+        {
+            print(key + "--" + dict[key]);
+        }
+
+        List<object> list = luaenv.Global.Get<List<object>>("person");  //List可以用来接收表中的数组，未定义Key的种类
+        foreach (object o in list)
+        {
+            print(o);
+        }
+
+        LuaTable tab = luaenv.Global.Get<LuaTable>("person");  //通过LuaTable来访问表中数据，不推荐，速度比较慢
+        print(tab.Get<string>("Name"));
+        print(tab.Get<int>("age"));
     }
 
     void OnDestroy () {

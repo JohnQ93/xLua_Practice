@@ -7,7 +7,10 @@ person = {
 	age = 100,
 	eat = function (self,a,b)
 		print("eating..."..a+b)
-	end
+	end,
+	2,23,12,
+	"lalala",
+	2.15
 }
 
 function person:add(a,b)
