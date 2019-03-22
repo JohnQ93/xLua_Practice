@@ -1,0 +1,12 @@
+CS.UnityEngine.GameObject("lua new obj")
+
+local gameobject = CS.UnityEngine.GameObject;
+
+local camera = gameobject.Find("Main Camera")
+camera.name = "lua camera"
+
+local light = gameobject.Find("Directional Light")
+
+print(CS.UnityEngine.Time.deltaTime)
+
+light:GetComponent("Light").intensity = 0.5

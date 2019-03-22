@@ -42,7 +42,23 @@ public class CSharpCallLua : MonoBehaviour {
         LuaTable tab = luaenv.Global.Get<LuaTable>("person");  //通过LuaTable来访问表中数据，不推荐，速度比较慢
         print(tab.Get<string>("Name"));
         print(tab.Get<int>("age"));
+
+        Mul mul = luaenv.Global.Get<Mul>("multiply");
+        int resa; int resb;
+        int res = mul(12, 2, out resa, out resb);
+        print(res);
+        print(resa);
+        print(resb);
+
+        LuaFunction func = luaenv.Global.Get<LuaFunction>("multiply"); //通过LuaFunction来访问全局函数，生成代码量小，访问速度慢
+        object[] objs = func.Call(2, 5);
+        foreach (var item in objs)
+        {
+            print(item);
+        }
     }
+    [CSharpCallLua]
+    delegate int Mul(int a, int b, out int resa, out int resb);  //定义delegate来映射lua中的全局函数，使用out来接受多个返回值
 
     void OnDestroy () {
         luaenv.Dispose();
