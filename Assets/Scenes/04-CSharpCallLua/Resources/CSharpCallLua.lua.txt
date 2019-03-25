@@ -17,7 +17,7 @@ function person:add(a,b)
 	print(a+b)
 end
 
-function multiply(a,b)
-	print(a*b)
-	return a+b,a,b
+function multiply(a,b,c)
+	print(a*b*c)
+	return a+b,a-b,c
 end

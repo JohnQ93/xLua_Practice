@@ -44,21 +44,21 @@ public class CSharpCallLua : MonoBehaviour {
         print(tab.Get<int>("age"));
 
         Mul mul = luaenv.Global.Get<Mul>("multiply");
-        int resa; int resb;
-        int res = mul(12, 2, out resa, out resb);
+        int resa = 2; int resb;
+        int res = mul(12, 2, ref resa, out resb);
         print(res);
         print(resa);
         print(resb);
 
         LuaFunction func = luaenv.Global.Get<LuaFunction>("multiply"); //通过LuaFunction来访问全局函数，生成代码量小，访问速度慢
-        object[] objs = func.Call(2, 5);
+        object[] objs = func.Call(2, 5, 3);
         foreach (var item in objs)
         {
             print(item);
         }
     }
     [CSharpCallLua]
-    delegate int Mul(int a, int b, out int resa, out int resb);  //定义delegate来映射lua中的全局函数，使用out来接受多个返回值
+    delegate int Mul(int a, int b, ref int resa, out int resb);  //定义delegate来映射lua中的全局函数，使用out来接受多个返回值
 
     void OnDestroy () {
         luaenv.Dispose();
